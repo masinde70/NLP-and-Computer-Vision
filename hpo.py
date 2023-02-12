@@ -7,6 +7,9 @@ import torch.optim as optim
 import torchvision
 import torchvision.models as models
 import torchvision.transforms as transforms
+import os
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES
 
 import argparse
 
@@ -16,7 +19,17 @@ def test(model, test_loader):
           testing data loader and will get the test accuray/loss of the model
           Remember to include any debugging/profiling hooks that you might need
     '''
-    pass
+    model.eval()
+    correct = 0
+    with torch.no_grad():
+        for data, target in test_loader:
+            output = model(data)
+            pred = output.argmax(dim=1, keepdim=True) 
+            correct += pred.eq(target,view_as(pred)).sum().item()
+    print("\nAccuracy: {}/{} ({:.0f}%)\n".format(
+            correct, len(test_loader.dataset), 100.0 * correct / len(test_loader.dataset)
+        )
+    )
 
 def train(model, train_loader, criterion, optimizer):
     '''
