@@ -37,7 +37,16 @@ def train(model, train_loader, criterion, optimizer):
           data loaders for training and will get train the model
           Remember to include any debugging/profiling hooks that you might need
     '''
-    pass
+    model.train()
+    trained_iamges = 0
+    num_images = len(train_loader.dataset)
+    for (inputs, labels) in train_loader:
+        optimizer.zero_grad()
+        outputs = model(inputs)
+        loss = criterion(outputs)
+        trained_images += len(inputs)
+        optimizer.step()
+        print(f"{trained_images}/{num_images} images trained")
     
 def net():
     '''
