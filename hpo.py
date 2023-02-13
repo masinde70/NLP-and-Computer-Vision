@@ -92,6 +92,8 @@ def main(args):
                        default=14,
                        metavar="N",
                        help="number of epochs to train(default: 14)",)
+    parser.add_argument("--lr", type=float, default=1.0, metavar="LR", help="Learning rate(default: 1.0)")
+    parser.add
     model=net()
     
     '''
