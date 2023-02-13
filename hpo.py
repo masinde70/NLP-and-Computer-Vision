@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.models as models
-import torchvision.transforms datasets, transforms
+from torchvision import datasets, transforms
 import os
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
