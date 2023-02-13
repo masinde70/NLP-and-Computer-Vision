@@ -77,7 +77,7 @@ def net():
 
         return model
 
-def create_data_loaders(data, transform_functions, batch_size, shuffle=True):
+def create_data_loader(data, transform_functions, batch_size, shuffle=True):
     '''
     This is an optional function that you may or may not need to implement
     depending on whether you need to use data loaders or not
@@ -135,34 +135,20 @@ def main(args):
     test_transforms = transforms.Compose([transforms.Resize((255, 255)),
                                          transforms.ToTensor()])
 
+    train_loader = create_data_loader(args.train, train_transforms, args.batch_size)
+    test_loader = create_data_loader(args.test, test_transforms, args.batch_size, shuffle=False)
     
-
-
-
-
-
     '''
     TODO: Call the train function to start training your model
     Remember that you will need to set up a way to get training data from S3
     '''
-    model=train(model, train_loader, loss_criterion, optimizer)
+    for epoch in range(1, args.epoch + 1):
+        train(model, train_loader, loss_criterion, optimizer, hook)
+        test(model, test_loader, loss_criterion, hook)
     
-    '''
-    TODO: Test the model to see its accuracy
-    '''
-    test(model, test_loader, criterion)
-    
-    '''
-    TODO: Save the trained model
-    '''
-    torch.save(model, path)
+    path = os.path.join(args.model_dir, "model.path")
+    torch.save(model.cpu().state_dict(), path)
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser()
-    '''
-    TODO: Specify any training args that you might need
-    '''
+    main()
     
-    args=parser.parse_args()
-    
-    main(args)
