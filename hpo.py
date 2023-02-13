@@ -109,34 +109,23 @@ def main(args):
     test_transforms = transforms.Compose([transforms.Resize((255, 255)),
                                          transforms.ToTensor()])
     
+    
+    train_loader = create_data_loader(args.train, train_transforms, args.batch_size)
+    test_loader = create_data_loader(args.test, test_transforms, args.test_batch_size, shuffle=False)
+    
     '''
     TODO: Create your loss and optimizer
     '''
     loss_criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.fc.parameters(), lr=args.lr)
     
-    '''
-    TODO: Call the train function to start training your model
-    Remember that you will need to set up a way to get training data from S3
-    '''
-    model=train(model, train_loader, loss_criterion, optimizer)
     
-    '''
-    TODO: Test the model to see its accuracy
-    '''
-    test(model, test_loader, criterion)
-    
-    '''
-    TODO: Save the trained model
-    '''
-    torch.save(model, path)
+    for epoch in range(1, args.epochs + 1):
+        train(model, train_loader, loss_criterion, optimzer)
+        test(model, test_loader)
+        
+    path = os.path.join(args.model_dir, "model.path")
+    torch.save(model.cpu().state_dict(), path)
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser()
-    '''
-    TODO: Specify all the hyperparameters you need to use to train your model.
-    '''
-    
-    args=parser.parse_args()
-    
-    main(args)
+    main()
