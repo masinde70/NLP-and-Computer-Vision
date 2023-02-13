@@ -77,15 +77,42 @@ def net():
 
         return model
 
-def create_data_loaders(data, batch_size):
+def create_data_loaders(data, transform_functions, batch_size, shuffle=True):
     '''
     This is an optional function that you may or may not need to implement
     depending on whether you need to use data loaders or not
     '''
-    pass
+    data = datasets.ImageFolder(data, transform=transform_functions)
+    return torch.utils.data.DataLoader(data, batch_size=batch_size, shuffle=shuffle)
 
 def main(args):
-    '''
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--batch_size",
+                        type=int,
+                        default=64,
+                        metavar="N",
+                        help="input value for training (default: 64)",)
+    parser.add_argument("--test-batch-size",
+                        type=int,
+                        default=1000,
+                        metavar="N",
+                        help="input batch size for testing (default: 1000)",)
+    
+    parser.add_argument("--epochs",
+                        type=int,
+                        default=14,
+                        help="number of epochs to train (default: 14)",)
+
+    parser.add_argument("--lr", type=float,
+                        default=1.0,
+                        metavar="LR",
+                        help="learning rate (default: 1.0)",)
+    parser.add_argument('--model-dir', type=str, default=os.environ['SM_MODEL_DIR'])
+    parser.add_argument('--train', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
+    parser.add_argument('--test', type=str, default=os.environ['SM_CHANNEL_TEST'])
+    args = parser.parse_args()
+    ''' 
     TODO: Initialize a model by calling the net function
     '''
     model=net()
@@ -93,9 +120,27 @@ def main(args):
     '''
     TODO: Create your loss and optimizer
     '''
-    loss_criterion = None
-    optimizer = None
+    loss_criterion = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(model.fc.parameters(), lr=args.lr)
     
+    hook = smd.Hook.create_from_json_file()
+    hook.register_module(model)
+    hook.register_loss(loss_criterion)
+
+    train_transforms = transforms.Compose([
+                                        transforms.Resize((255, 255)),
+                                        transforms.RandomHorizontalFlip(),
+                                        transforms.ToTensor()])
+
+    test_transforms = transforms.Compose([transforms.Resize((255, 255)),
+                                         transforms.ToTensor()])
+
+    
+
+
+
+
+
     '''
     TODO: Call the train function to start training your model
     Remember that you will need to set up a way to get training data from S3
