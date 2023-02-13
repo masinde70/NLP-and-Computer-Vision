@@ -32,7 +32,15 @@ def test(model, test_loader, criterion, hook):
     
     for inputs, labels in test_loader:
         outputs = model(inputs)
-        loss = crite
+        loss = criterion(outputs, labels)
+        _, preds = torch.max(outputs, 1)
+        running_loss += loss.item() * inputs.size(0)
+        running_corrects += torch.sum(preds == labels.data).item()
+
+    total_loss = running_loss / len(test_loader.dataset)
+    total_acc = running_corrects / len(test_loader.dataset)
+    print(f"Accuracy: {100 * total_acc}%, Testing Loss: {total_loss}%, Testing Accuracy: {total_loss}")
+        
 
 def train(model, train_loader, criterion, optimizer):
     '''
