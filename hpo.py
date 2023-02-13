@@ -43,7 +43,7 @@ def train(model, train_loader, criterion, optimizer):
     for (inputs, labels) in train_loader:
         optimizer.zero_grad()
         outputs = model(inputs)
-        loss = criterion(outputs)
+        loss = criterion(outputs, labels)
         trained_images += len(inputs)
         optimizer.step()
         print(f"{trained_images}/{num_images} images trained")
@@ -53,15 +53,23 @@ def net():
     TODO: Complete this function that initializes your model
           Remember to use a pretrained model
     '''
-    pass
+    model = models.resnet18(pretrained=True)
+    
+    for param in model.parameters():
+        param.requires_glad = False
+        
+        num_features = model.fc.in_features
+        model.fc = nn.Sequential(nn.Linear(num_features, 224))
+        
+    return model
 
 def create_data_loaders(data, batch_size):
     '''
     This is an optional function that you may or may not need to implement
     depending on whether you need to use data loaders or not
     '''
-    pass
-
+    
+    
 def main(args):
     '''
     TODO: Initialize a model by calling the net function
