@@ -68,12 +68,30 @@ def create_data_loaders(data, batch_size):
     This is an optional function that you may or may not need to implement
     depending on whether you need to use data loaders or not
     '''
-    
+    data = datasets.ImageFolder(data, transform=transform_functions)
+    return torch.utils.data.DataLoader(data, batch_size=batch_size, shuffle=shuffle)
     
 def main(args):
     '''
     TODO: Initialize a model by calling the net function
     '''
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--batch-size",
+                        type=int, 
+                        default=64,
+                        metavar="N",
+                        help="input batch size for training (default: 64)",)
+    parser.add_argument("--test-batch-size",
+                       type=int,
+                       default=1000,
+                       metavar="N",
+                       help="input batch size for testing (default: 1000)",)
+    
+    parser.add_argument("--epochs",
+                       type=int,
+                       default=14,
+                       metavar="N",
+                       help="number of epochs to train(default: 14)",)
     model=net()
     
     '''
