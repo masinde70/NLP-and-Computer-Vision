@@ -7,7 +7,9 @@ import torch.optim as optim
 import torchvision
 import torchvision.models as models
 from torchvision import datasets, transforms
-import argparse
+import smdebug.pytorch as smd
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 import os
 
 
@@ -16,13 +18,21 @@ import argparse
 
 #TODO: Import dependencies for Debugging andd Profiling
 
-def test(model, test_loader):
+def test(model, test_loader, criterion, hook):
     '''
     TODO: Complete this function that can take a model and a 
           testing data loader and will get the test accuray/loss of the model
           Remember to include any debugging/profiling hooks that you might need
     '''
-    pass
+    model.eval()
+    hook.set_mode(smd.modes.EVAL)
+    
+    running_loss = 0
+    running_corrects = 0
+    
+    for inputs, labels in test_loader:
+        outputs = model(inputs)
+        loss = crite
 
 def train(model, train_loader, criterion, optimizer):
     '''
