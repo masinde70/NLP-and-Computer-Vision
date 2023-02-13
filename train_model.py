@@ -6,7 +6,10 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision
 import torchvision.models as models
-import torchvision.transforms as transforms
+from torchvision import datasets, transforms
+import argparse
+import os
+
 
 import argparse
 
