@@ -60,7 +60,7 @@ def train(model, train_loader, criterion, optimizer, hook):
         loss.backward   ()
         optimizer.step()
         print(f"{trained_images}/{num_images} images trained...")
-        
+
 
     
 def net():
@@ -68,7 +68,14 @@ def net():
     TODO: Complete this function that initializes your model
           Remember to use a pretrained model
     '''
-    pass
+    model = model.resnet18(pretrained=True)
+    for param in model.parameters():
+        param.requires_grad = False
+
+        num_features = model.fc.in_features
+        model.fc = nn.Sequential(nn.Linear(num_features, 224))
+
+        return model
 
 def create_data_loaders(data, batch_size):
     '''
