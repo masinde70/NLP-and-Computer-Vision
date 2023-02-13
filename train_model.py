@@ -127,13 +127,9 @@ def main(args):
     hook.register_module(model)
     hook.register_loss(loss_criterion)
 
-    train_transforms = transforms.Compose([
-                                        transforms.Resize((255, 255)),
-                                        transforms.RandomHorizontalFlip(),
-                                        transforms.ToTensor()])
+    train_transforms = transforms.Compose([transforms.Resize((255, 255)), transforms.RandomHorizontalFlip(), transforms.ToTensor()])
 
-    test_transforms = transforms.Compose([transforms.Resize((255, 255)),
-                                         transforms.ToTensor()])
+    test_transforms = transforms.Compose([transforms.Resize((255, 255)), transforms.ToTensor()])
 
     train_loader = create_data_loader(args.train, train_transforms, args.batch_size)
     test_loader = create_data_loader(args.test, test_transforms, args.batch_size, shuffle=False)
