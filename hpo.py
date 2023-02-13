@@ -93,14 +93,20 @@ def main(args):
                        metavar="N",
                        help="number of epochs to train(default: 14)",)
     parser.add_argument("--lr", type=float, default=1.0, metavar="LR", help="Learning rate(default: 1.0)")
-    parser.add
+    parser.add_argument('--model-dir', type=str, default=os.environ['SM_MODEL_DIR'])
+    parser.add_argument('--train', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
+    parser.add_argument('--test', type=str, default=os.environ['SM_CHANNEL_TEST'])
+    args = parser.parse_args()
     model=net()
+    
+    
+    train_transforms = 
     
     '''
     TODO: Create your loss and optimizer
     '''
-    loss_criterion = None
-    optimizer = None
+    loss_criterion = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(model.fc.parameters(), lr=args.lr)
     
     '''
     TODO: Call the train function to start training your model
