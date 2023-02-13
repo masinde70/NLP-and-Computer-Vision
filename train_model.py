@@ -42,13 +42,26 @@ def test(model, test_loader, criterion, hook):
     print(f"Accuracy: {100 * total_acc}%, Testing Loss: {total_loss}%, Testing Accuracy: {total_loss}")
         
 
-def train(model, train_loader, criterion, optimizer):
+def train(model, train_loader, criterion, optimizer, hook):
     '''
     TODO: Complete this function that can take a model and
           data loaders for training and will get train the model
           Remember to include any debugging/profiling hooks that you might need
     '''
-    pass
+    model.train()
+    hook.set_mode(smd.modes.TRAIN)
+    trained_images = 0
+    num_images = len(train_loader.dataset)
+    for inputs, labels in train_loader.dataset:
+        optimizer.zero_grad()
+        outputs = model(inputs)
+        loss = criterion(outputs, labels)
+        trained_images += len(inputs)
+        loss.backward   ()
+        optimizer.step()
+        print(f"{trained_images}/{num_images} images trained...")
+        
+
     
 def net():
     '''
