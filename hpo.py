@@ -96,11 +96,18 @@ def main(args):
     parser.add_argument('--model-dir', type=str, default=os.environ['SM_MODEL_DIR'])
     parser.add_argument('--train', type=str, default=os.environ['SM_CHANNEL_TRAIN'])
     parser.add_argument('--test', type=str, default=os.environ['SM_CHANNEL_TEST'])
+    
     args = parser.parse_args()
+    
     model=net()
     
     
-    train_transforms = 
+    train_transforms = transforms.Compose([transforms.Resize((255, 255)),
+                                          transforms.RandomHorizontalFlip(),
+                                          transforms.ToTensor()])
+    
+    test_transforms = transforms.Compose([transforms.Resize((255, 255)),
+                                         transforms.ToTensor()])
     
     '''
     TODO: Create your loss and optimizer
