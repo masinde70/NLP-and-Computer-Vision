@@ -15,8 +15,10 @@ The project is designed to be dataset independent so if there is a dataset that 
 Upload the data to an S3 bucket through the AWS Gateway so that SageMaker has access to the data. 
 
 ## Hyperparameter Tuning
-What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
-
+The model used in this project was ResNet18, the hyperparameters used were batch_size, epochs and learning rate(lr) the results are the following 
+```
+Accuracy: 79.76047904191617%, Testing Loss: 0.775725744013301
+```
 Remember that your README should:
 - Include a screenshot of completed training jobs
 - Logs metrics during the training process
