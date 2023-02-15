@@ -29,7 +29,7 @@ Remember that your README should:
  ![](Images/hypertuning.png)
  
  ## Training jobs
- ![](Images/training.png)
+ ![](Images/trainingjobs.png)
  
  ## Endpoint
  ![](Images/endpoint.png)  
