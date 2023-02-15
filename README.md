@@ -19,7 +19,7 @@ The model used in this project was ResNet18, the hyperparameters used were batch
 ```
 Accuracy: 79.76047904191617%, Testing Loss: 0.775725744013301
 ```
-Remember that your README should:
+## Processing Jobs
 
  ![](Images/processing.png)
  
