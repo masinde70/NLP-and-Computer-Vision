@@ -20,14 +20,18 @@ The model used in this project was ResNet18, the hyperparameters used were batch
 Accuracy: 79.76047904191617%, Testing Loss: 0.775725744013301
 ```
 Remember that your README should:
-- Include a screenshot of completed training jobs
-- Logs metrics during the training process
-- Tune at least two hyperparameters
-- Retrieve the best best hyperparameters from all your training jobs
 
  ![](Images/processing.png)
  
  ## Hyper parameter tuning
+ The model obtained was built using these hyperparameters
+ ```
+ hyperparameters = {
+    "batch-size": "256",
+ "epochs": 4,
+ "lr": "0.002564503867458704",
+}
+```
  ![](Images/hypertuning.png)
  
  ## Training jobs
@@ -65,5 +69,3 @@ The deployment of the model was done using python script deply.py
 #####  Endpoint in service
 ![](Images/endpoint.png) 
 
-## Standout Suggestions
-**TODO (Optional):** This is where you can provide information about any standout suggestions that you have attempted.
