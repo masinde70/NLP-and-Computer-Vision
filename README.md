@@ -35,21 +35,33 @@ Remember that your README should:
  
  ![](Images/trainingmetrics.png)
  
- ## Endpoint
- ![](Images/endpoint.png)  
+ 
+  
 ## Debugging and Profiling
-**TODO**: Give an overview of how you performed model debugging and profiling in Sagemaker
-
+In order to debug the train_model was used, and the rules were as follows
+```
+    ProfilerRule.sagemaker(rule_configs.LowGPUUtilization()),
+    ProfilerRule.sagemaker(rule_configs.ProfilerReport()),
+    Rule.sagemaker(rule_configs.vanishing_gradient()),
+    Rule.sagemaker(rule_configs.overfit()),
+```
 ### Results
-**TODO**: What are the results/insights did you get by profiling/debugging your model?
-
-**TODO** Remember to provide the profiler html/pdf file in your submission.
-
+The results of the debugging and profiling 
+``` 
+2023-02-15 10:28:08 Uploading - Uploading generated training model
+2023-02-15 10:28:08 Completed - Training job completed
+VanishingGradient: InProgress
+Overfit: NoIssuesFound
+LowGPUUtilization: InProgress
+ProfilerReport: NoIssuesFound
+Training seconds: 1242
+Billable seconds: 1242
+```
 
 ## Model Deployment
-**TODO**: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
-
-**TODO** Remember to provide a screenshot of the deployed active endpoint in Sagemaker.
+The deployment of the model was done using python script deply.py
+#####  Endpoint in service
+![](Images/endpoint.png) 
 
 ## Standout Suggestions
 **TODO (Optional):** This is where you can provide information about any standout suggestions that you have attempted.
