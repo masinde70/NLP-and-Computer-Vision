@@ -23,13 +23,17 @@ Remember that your README should:
 - Tune at least two hyperparameters
 - Retrieve the best best hyperparameters from all your training jobs
 
- ![](Images/processingjobs.pdf)
+ ![](Images/processing.png)
  
  ## Hyper parameter tuning
  ![](Images/hypertuning.png)
  
  ## Training jobs
  ![](Images/trainingjobs.png)
+ 
+ ## Training metrics
+ 
+ ![](Images/trainingmetrics.png)
  
  ## Endpoint
  ![](Images/endpoint.png)  
